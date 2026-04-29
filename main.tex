@@ -1,0 +1,342 @@
+\documentclass[12pt,a4paper,zihao=-4,AutoFakeBold,AutoFakeSlant]{ctexart}
+% ctexart：中文 LaTeX 文章类，支持中文排版
+% 12pt：正文字号 12pt（对应小四号）
+% a4paper：A4 纸张
+% zihao=-4：ctex 默认字号小四
+% AutoFakeBold：无粗体字形时自动伪粗体
+% AutoFakeSlant：无斜体字形时自动伪斜体
+
+\usepackage{ctex}           % 中文排版核心宏包，提供中文字体、标点、断行等支持
+\punctstyle{quanjiao}       % 关键！强制所有标点变成全角（中文标点），避免半角标点混入
+
+\usepackage{fontawesome5}   % 提供 FontAwesome 5 图标字体，可用 \faIcon{...} 插入矢量图标
+\usepackage{tipa}           % 提供国际音标（IPA）符号，用于正文中插入音标
+
+% ================================================================
+%  编码与编译环境相关
+% ================================================================
+\usepackage{iftex}          % 检测当前编译引擎（pdfLaTeX / XeLaTeX / LuaLaTeX），用于条件分支
+\usepackage{fontspec}       % XeLaTeX/LuaLaTeX 专用字体设置宏包，支持调用系统 OpenType 字体
+
+% ================================================================
+%  页面布局相关
+% ================================================================
+\usepackage{geometry}       % 灵活设置页面尺寸、页边距（上下左右）
+\usepackage{fancyhdr}       % 自定义页眉、页脚样式（内容、线条、位置）
+
+% ================================================================
+%  数学公式相关
+% ================================================================
+\usepackage{amsmath}        % AMS 基础数学宏包：对齐环境、多行公式、数学命令增强
+\usepackage{amsthm}         % AMS 定理排版：\newtheorem、proof 环境等
+\usepackage{amssymb}        % AMS 额外数学符号：\mathbb、\trianglelefteq 等
+\usepackage{amsfonts}       % AMS 数学字体：黑板粗体（\mathbb）、哥特体（\mathfrak）
+\usepackage{mathrsfs}       % 提供花体数学字母 \mathscr{...}（如脚本字母）
+\usepackage{mathtools}      % amsmath 的扩展：更多数学环境、\coloneqq、矩阵修复等
+
+% ================================================================
+%  图表与表格相关
+% ================================================================
+\usepackage{graphicx}       % 插入外部图片（\includegraphics），支持缩放、旋转
+\usepackage{bicaption}      % 双语标题宏包，支持图表同时输出中英文题注（\bicaption）
+\usepackage{caption}        % 定制浮动体（图/表）题注格式：字体、间距、分隔符等
+
+% 全局设置 caption 样式
+\captionsetup{
+  font     = {small, rm},   % small=五号字（约10.5pt），rm=衬线体（宋体/Times）
+  labelfont= {small, rm},   % 标签（如"图 2.1"）同上
+  textfont = {small, rm}    % 标题文本同上
+}
+
+% 英文全局 Times New Roman
+\setmainfont{Times New Roman}   % 设置英文主字体为 Times New Roman（需系统已安装）
+
+% 图表 caption 强制 Times New Roman
+\DeclareCaptionFont{times}{\fontspec{Times New Roman}}  % 声明名为 times 的题注字体
+\captionsetup{font=times}       % 将全部题注字体覆盖为 Times New Roman
+
+\usepackage{subcaption}     % 子图/子表环境（subfigure / subtable），用于并排多图
+\usepackage{float}          % 提供 [H] 浮动选项，强制图表固定在当前位置（不浮动）
+\usepackage{booktabs}       % 高质量三线表命令：\toprule、\midrule、\bottomrule
+\usepackage{array}          % 扩展表格列格式：增加 m{} p{} 等列类型及列格式钩子
+\usepackage{tablefootnote}  % 在表格内部使用脚注（\tablefootnote{...}）
+\usepackage{tabularx}       % 提供 tabularx 环境，支持自适应宽度的 X 列类型
+
+% ========== bicaption 双语题注配置 ==========
+\DeclareCaptionOption{chinese}[]{       % 声明"chinese"选项：中文图表名
+  \renewcommand{\figurename}{图}
+  \renewcommand{\tablename}{表}
+}
+\DeclareCaptionOption{english}[]{       % 声明"english"选项：英文图表名
+  \renewcommand{\figurename}{Figure}
+  \renewcommand{\tablename}{Table}
+}
+\captionsetup[bi-first]{chinese}        % bicaption 第一行（主语言）使用中文
+\captionsetup[bi-second]{english}       % bicaption 第二行（副语言）使用英文
+
+\renewcommand{\figurename}{图}          % 全局图片标签重设为"图"
+\renewcommand{\tablename}{表}           % 全局表格标签重设为"表"
+
+% ================================================================
+%  目录与附录相关
+% ================================================================
+\usepackage{tocloft}        % 目录（TOC）深度定制：字体、间距、引导线、标题格式
+\usepackage{appendix}       % 附录排版支持：\begin{appendices} 及附录标题格式
+\usepackage{titletoc}       % 更灵活的目录样式定制（\titlecontents 命令）
+
+% 自定义目录样式：一级标题 section
+\titlecontents{section}
+  [0em]                                       % 整体左缩进量
+  {\bfseries}                                 % 条目整体格式：粗体
+  {\contentslabel{1.5em}}                     % 编号宽度（"1." 占 1.5em）
+  {}                                          % 无编号时标题前的额外内容
+  {\titlerule*[0.6pc]{.}\contentspage}        % 引导点（间距 0.6pc）+ 页码
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsecdotsep}}  % tocloft：小节行末用点填充引导至页码
+\setcounter{tocdepth}{3}    % 目录深度：显示至三级标题（subsubsection）
+\setcounter{lofdepth}{1}    % 图目录深度：仅显示一级浮动图
+\setcounter{lotdepth}{1}    % 表目录深度：仅显示一级浮动表
+
+% ================================================================
+%  列表与排版格式相关
+% ================================================================
+\usepackage{enumerate}      % 扩展有序列表：支持自定义标签格式（如 \begin{enumerate}[(1)]）
+\usepackage{setspace}       % 灵活设置行间距：\setstretch{} 或 spacing 环境
+
+% ================================================================
+%  框体与高亮相关
+% ================================================================
+\usepackage{color}          % 基础颜色支持（已基本被 xcolor 取代，保留兼容性）
+\usepackage{xcolor}         % 增强颜色宏包：支持 RGB/HTML/named 颜色，提供 \colorbox 等命令
+\usepackage{framed}         % 简单文本框：\begin{framed}、\begin{shaded} 等环境
+\usepackage{mdframed}       % 高级可跨页文本框，支持圆角、背景色、边框线等精细设置
+
+% ================================================================
+%  算法排版相关
+% ================================================================
+\usepackage[boxed,ruled,lined,linesnumbered]{algorithm2e}
+% algorithm2e：算法浮动体排版宏包
+%   boxed        = 算法整体加外框
+%   ruled        = 顶部/底部横线（类三线表风格）
+%   lined        = 在算法内部画竖线（结构线）
+%   linesnumbered= 每行显示行号
+\usepackage{algorithmic}    % 提供 \algorithmic 环境内的伪代码命令（\STATE、\IF 等）
+\usepackage{tikz}           % 功能强大的矢量绘图宏包，基于 pgf，用于绘制各类图形
+\usetikzlibrary{positioning}% TikZ 库：提供相对定位语法（above of=、right=of 等）
+
+% ================================================================
+%  代码排版相关
+% ================================================================
+\usepackage{listings}       % 代码排版宏包：语法高亮、行号、边框、自动换行等
+\usepackage{lstautogobble}  % listings 插件：自动去除代码块前多余的缩进空白
+
+% JSON 语言高亮定义（listings 自带无 JSON，手动补充）
+\lstdefinelanguage{JSON}{
+  basicstyle      = \zihao{-5}\ttfamily,      % 基础样式：小五等宽字体
+  numbers         = left,                      % 行号位于左侧
+  numberstyle     = \tiny\color{gray},         % 行号样式：微型灰色字
+  stepnumber      = 1,                         % 每隔 1 行显示行号
+  numbersep       = 5pt,                       % 行号与代码的间距
+  showstringspaces= false,                     % 不显示字符串中的空格符号
+  breaklines      = true,                      % 自动换行
+  frame           = single,                    % 单线边框
+  backgroundcolor = \color{gray!5},            % 背景色：5% 灰
+  stringstyle     = \color{blue},              % 字符串颜色：蓝
+  keywordstyle    = \color{red},               % 关键字颜色：红
+  literate        =                            % 特殊符号着色替换
+    {true}{{\color{purple}true}}4
+    {false}{{\color{black}false}}5
+    {null}{{\color{purple}null}}4
+    {:}{{\color{red}:}}1
+    {,}{{\color{red},}}1
+    {\{}{{\color{black}\{}}1
+    {\}}{{\color{black}\}}}1
+    {[}{{\color{black}[}}1
+    {]}{{\color{black}]}}1,
+}
+
+% 全局代码高亮样式（默认语言 Python）
+\lstset{
+  language        = Python,                    % 默认高亮语言：Python
+  basicstyle      = \small\ttfamily,           % 基础样式：small 等宽字体
+  numbers         = left,                      % 行号在左
+  numberstyle     = \tiny\color{gray},         % 行号：微型灰色
+  numbersep       = 5pt,                       % 行号间距
+  frame           = shadowbox,                 % 阴影边框
+  rulecolor       = \color{black},             % 边框颜色：黑
+  breaklines      = true,                      % 超长行自动换行
+  keywordstyle    = \color{blue}\bfseries,     % 关键字：蓝色加粗
+  commentstyle    = \color{green!60!black},    % 注释：深绿色
+  stringstyle     = \color{red},               % 字符串：红色
+  identifierstyle = \color{black},             % 标识符：黑色
+  backgroundcolor = \color{gray!5},            % 背景：5% 灰
+  showspaces      = false,                     % 不显示空格符
+  showstringspaces= false,                     % 不显示字符串内空格符
+}
+
+\usepackage{minted}         % 高级代码高亮宏包（基于 Python Pygments），效果优于 listings；
+                            % 需在编译时加 -shell-escape 参数，且系统需安装 Python + pygments
+
+% ================================================================
+%  引用与交叉引用相关
+% ================================================================
+\usepackage[authoryear,square]{gbt7714}
+% gbt7714：中国国家标准 GB/T 7714-2015 参考文献格式宏包
+%   authoryear = 著者-出版年制（如 Smith, 2020）
+%   square     = 引用标注使用方括号 [Smith, 2020]
+% 注：gbt7714 内部自动加载 natbib，无需单独 \usepackage{natbib}
+
+\usepackage{hyperref}       % 超链接宏包：目录、引用、URL 均可点击跳转；
+                            % 可设置 colorlinks、bookmarks、pdfinfo 等选项
+\usepackage{cleveref}       % 智能交叉引用：\cref{} 自动添加类型前缀（如"图 2.1""定理 3"）
+
+% ================================================================
+%  特殊功能相关
+% ================================================================
+\usepackage{xlop}           % 数学竖式运算排版（加减乘除手算格式，适用于教材）
+\usepackage[symbol]{footmisc}
+% footmisc：脚注扩展宏包
+%   symbol = 脚注标记使用符号序列（*、†、‡…）而非数字
+\usepackage{multirow}       % 表格跨行合并：提供 \multirow{n}{width}{内容} 命令
+
+% ================================================================
+%  全局版式设置
+% ================================================================
+\linespread{1.5}            % 行间距：1.5 倍（符合学校论文规范）
+
+% 页面边距
+\geometry{left=3cm, right=3cm, top=2.5cm, bottom=2.5cm}
+% 左右各 3cm，上下各 2.5cm（符合山东大学毕业论文格式要求）
+
+% ================================================================
+%  页眉页脚样式定义
+% ================================================================
+
+% plain 样式：用于摘要、目录等前置页面
+%   - 无页眉，无页眉线
+%   - 页脚居中显示页码（小五字号）
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\zihao{-5}\thepage}
+  \renewcommand\headrulewidth{0pt}
+  \renewcommand\footrulewidth{0pt}
+}
+
+% body 样式：用于正文页面
+%   - 页眉居中"山东大学本科毕业论文（设计）"，小五字号，0.6pt 页眉线
+%   - 页脚居中显示页码（小五字号）
+\fancypagestyle{body}{
+  \fancyhf{}
+  \fancyfoot[C]{\zihao{-5}\thepage}
+  \fancyhead[C]{\zihao{-5}山东大学本科毕业论文（设计）}
+  \renewcommand\headrulewidth{0.6pt}
+  \renewcommand\footrulewidth{0pt}
+}
+
+% ================================================================
+%  参考文献版式
+% ================================================================
+\setlength{\bibsep}{0em}              % 参考文献条目间距清零（条目紧排）
+\renewcommand*{\bibfont}{\zihao{5}\songti}  % 参考文献字体：五号宋体
+\setmainfont{Times New Roman}         % 再次确认英文主字体（覆盖可能的冲突）
+
+% ================================================================
+%  ctexset：中文标题格式配置
+% ================================================================
+\ctexset{
+  section={
+    format      += \heiti\zihao{3}\bfseries,  % 一级标题：黑体三号加粗
+    beforeskip   = 0.8\baselineskip,           % 标题前空 0.8 行
+    afterskip    = 0.5\baselineskip,           % 标题后空 0.5 行
+  },
+  subsection={
+    format       = \heiti\zihao{4}\bfseries,  % 二级标题：黑体四号加粗
+    beforeskip   = 0.5\baselineskip,
+    afterskip    = 0.5\baselineskip,
+  },
+  subsubsection={
+    format       = \heiti\zihao{-4}\bfseries, % 三级标题：黑体小四加粗
+    beforeskip   = 0.5\baselineskip,
+    afterskip    = 0.5\baselineskip,
+  },
+  autoindent   = true,                        % 中文段落首行自动缩进两字符
+  % 以下三项：目录名、参考文献名、附录名居中黑体小二加粗
+  contentsname  = {\hfill\textbf{\heiti\zihao{-2}目\qquad 录}\hfill},
+  bibname       = {\hfill\heiti\zihao{-2}{参考文献}\hfill},
+  appendixname  = {\hfill\textbf{\heiti\zihao{-2}附\qquad 录}\hfill},
+}
+
+% ================================================================
+%  修复：重新定义目录标题（解决 tocloft 与 ctex 冲突时显示异常）
+% ================================================================
+\renewcommand{\contentsname}{\hfill\textbf{\heiti\zihao{-2}目\qquad 录}\hfill}
+\renewcommand{\listfigurename}{\hfill\textbf{\heiti\zihao{-2}图\qquad 目\qquad 录}\hfill}
+\renewcommand{\listtablename}{\hfill\textbf{\heiti\zihao{-2}表\qquad 目\qquad 录}\hfill}
+\renewcommand{\bibname}{\hfill\textbf{\heiti\zihao{-2}参考文献}\hfill}
+\renewcommand{\appendixname}{\hfill\textbf{\heiti\zihao{-2}附\qquad 录}\hfill}
+
+% ================================================================
+%  图表编号格式
+%    图：节号.图号（如 图 2.1）
+%    表：节号-表号（如 表 2-1）
+% ================================================================
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{section}-\arabic{table}}
+\DeclareCaptionLabelSeparator{quad}{\quad}  % 声明题注分隔符为四分空
+\captionsetup{labelsep=quad}               % 题注标签与内容间使用四分空分隔
+
+% ================================================================
+%  正文
+% ================================================================
+\begin{document}
+
+\pagestyle{empty}   % 封面页：无页眉页脚
+
+\newpage\input{"cover/cover_cyber"}     % 封面
+
+\begin{sloppypar}   % 宽松断行模式，减少因中英文混排导致的 overfull hbox 警告
+  \newpage\input{"abstractC/abstractC"} % 中文摘要
+  \newpage\input{"abstractE/abstractE"} % 英文摘要
+\end{sloppypar}
+
+\clearpage
+\setcounter{page}{1}        % 前置页从第 1 页起
+\pagenumbering{Roman}       % 前置页使用罗马数字页码（I、II、III……）
+\pagestyle{plain}           % 切换为 plain 样式（仅页脚页码）
+
+\newpage
+\tableofcontents            % 生成目录
+\clearpage
+
+\listoffigures            % 图目录（按需取消注释）
+\clearpage
+\listoftables             % 表目录（按需取消注释）
+\clearpage
+\lstlistoflistings        % 代码目录（按需取消注释）
+\clearpage
+
+\setcounter{page}{1}        % 正文从第 1 页起
+\pagenumbering{arabic}      % 正文使用阿拉伯数字页码（1、2、3……）
+\pagestyle{body}            % 切换为 body 样式（页眉 + 页脚页码）
+
+\begin{sloppypar}
+  \newpage\input{"body/1.tex"}  % 第一章
+  \newpage\input{"body/2.tex"}  % 第二章
+  % \newpage\input{"body/3.tex"}
+  % \newpage\input{"body/4.tex"}
+  % \newpage\input{"body/5.tex"}
+\end{sloppypar}
+
+\newpage
+\addcontentsline{toc}{section}{参考文献}   % 将参考文献手动加入目录
+\nocite{*}                                  % 引用 .bib 中所有条目（包括未显式引用的）
+\begin{spacing}{1}                          % 参考文献区域行距压缩为 1 倍（单倍行距）
+  \bibliography{ref}                        % 调用 ref.bib 生成参考文献列表
+\end{spacing}
+
+\begin{sloppypar}
+  \newpage\input{"acknowledge/acknowledge"} % 致谢
+  \newpage\input{"appendix/appendix"}       % 附录
+\end{sloppypar}
+
+\end{document}

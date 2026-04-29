@@ -66,18 +66,18 @@ The core of the template is the `sduthesis.cls` document class, which encapsulat
 
 > 封面 · 摘要 · 目录 · 正文 · 参考文献 · 致谢
 
-```
-封面          中/英文摘要       目录            正文章节
-┌────────┐   ┌────────┐   ┌────────┐   ┌────────┐
-│ 校徽   │   │摘  要  │   │目  录  │   │1 引言  │
-│        │   │        │   │1 引言  │   │        │
-│毕业论文│   │关键词: │   │2 模型  │   │1.1 背景│
-│（设计）│   │────────│   │3 实验  │   │        │
-│  题目  │   │ABSTRACT│   │参考文献│   │公式图表│
-│        │   │        │   │致  谢  │   │        │
-│姓名学号│   │Keywords│   │附  录  │   │参考文献│
-└────────┘   └────────┘   └────────┘   └────────┘
-```
+![山东大学本科毕业论文_设计_模板_01](https://github.com/user-attachments/assets/89ab19ee-90f2-4a2a-a766-ae3d49287cda)
+![山东大学本科毕业论文_设计_模板_02](https://github.com/user-attachments/assets/158d1a99-08d5-4958-9d1d-8e936937cdff)
+![山东大学本科毕业论文_设计_模板_03](https://github.com/user-attachments/assets/3c5f6f02-1630-448a-8911-a408de4b95b7)
+![山东大学本科毕业论文_设计_模板_04](https://github.com/user-attachments/assets/c6096976-1926-4c78-b384-2d96c52e6018)
+![山东大学本科毕业论文_设计_模板_05](https://github.com/user-attachments/assets/31d00f98-b731-4a6b-9d30-2aeabe03311b)
+![山东大学本科毕业论文_设计_模板_06](https://github.com/user-attachments/assets/9c8ec10a-9eab-46ca-bffb-4d6db83f3ade)
+![山东大学本科毕业论文_设计_模板_07](https://github.com/user-attachments/assets/03b8d170-5511-41a1-a2c5-af8d080c48f4)
+![山东大学本科毕业论文_设计_模板_08](https://github.com/user-attachments/assets/0dddace4-7b59-4c0d-bdb1-0c71da531092)
+![山东大学本科毕业论文_设计_模板_09](https://github.com/user-attachments/assets/75ba9f70-e5f5-4139-b2d4-4e6f63676521)
+![山东大学本科毕业论文_设计_模板_10](https://github.com/user-attachments/assets/c51cbea7-3cd1-402c-abda-39afcf72d87f)
+![山东大学本科毕业论文_设计_模板_11](https://github.com/user-attachments/assets/20631782-5bf8-4b91-b5d6-1fda68fa3cd6)
+![山东大学本科毕业论文_设计_模板_12](https://github.com/user-attachments/assets/c9878f59-0110-4691-8157-3b8c82ca505a)
 
 ---
 
@@ -86,7 +86,6 @@ The core of the template is the `sduthesis.cls` document class, which encapsulat
 ```
 SDU-Thesis-LaTeX/
 │
-├── sduthesis.cls              # 核心文档类文件 / Core document class
 ├── main.tex                   # 主文件（含详细注释）/ Main file (annotated)
 ├── ref.bib                    # 参考文献库 / Bibliography database
 │
@@ -103,9 +102,8 @@ SDU-Thesis-LaTeX/
 │   └── abstractE.tex          # 英文摘要 / English abstract
 │
 ├── body/
-│   ├── chapter1_introduction.tex   # 第一章 引言
-│   ├── chapter2_model.tex          # 第二章 模型
-│   ├── chapter3_experiment.tex     # 第三章 实验
+│   ├── 1.tex   # 第一章 
+│   ├── 2.tex          # 第二章 
 │   └── ...                         # 其余章节 / Other chapters
 │
 ├── acknowledge/

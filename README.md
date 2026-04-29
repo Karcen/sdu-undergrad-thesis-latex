@@ -130,15 +130,15 @@ cd SDU-Thesis-LaTeX
 
 **2. 修改论文信息**
 
-打开 `main.tex`，填写您的论文元数据：
+打开 `main.tex`，填写你的论文元数据：
 
 ```latex
-\thesistitle{您的论文题目}
-\thesisauthor{您的姓名}
-\thesisstuid{您的学号}
-\thesiscollege{您的学院}
+\thesistitle{你的论文题目}
+\thesisauthor{你的姓名}
+\thesisstuid{你的学号}
+\thesiscollege{你的学院}
 \thesisgrade{20XX}
-\thesismajor{您的专业}
+\thesismajor{你的专业}
 \thesissupervisor{指导老师\quad 职称}
 \thesisdate{20XX}{月}{日}
 \thesiscover{pic/cover.jpg}

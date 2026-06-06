@@ -2,7 +2,7 @@
 
 <img src="pic/cover.jpg" alt="Shandong University" width="400"/>
 
-# You can use template on [TexPage](https://www.texpage.com/zh/template/82c4dc27-9cac-47eb-9bb5-6b5f50705131) directly.
+# You can use this template on [TexPage](https://www.texpage.com/zh/template/82c4dc27-9cac-47eb-9bb5-6b5f50705131) directly.
 
 # SDU-Thesis-LaTeX
 

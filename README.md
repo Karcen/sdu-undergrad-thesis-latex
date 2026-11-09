@@ -124,7 +124,7 @@ SDU-Thesis-LaTeX/
 ### 第一步：获取模板 | Get the Template
 
 ```bash
-git clone https://github.com/your-username/SDU-Thesis-LaTeX.git
+git clone https://github.com/Karcen/sdu-undergrad-thesis-latex.git
 cd SDU-Thesis-LaTeX
 ```
 
@@ -271,9 +271,9 @@ Feedback and contributions are welcome via Issues or Pull Requests.
 
 ## 许可证 | License
 
-本项目以 [MIT License](LICENSE) 开源，可自由使用、修改与分发。
+本项目的原创模板代码采用 [MIT License](LICENSE)。随附的参考文献样式文件、校徽及其他第三方素材，仍受各自的权利与许可约束。
 
-This project is released under the [MIT License](LICENSE) — free to use, modify, and distribute.
+The original template code is released under the [MIT License](LICENSE). Third-party bibliography styles, institutional marks, and other external assets retain their own rights and license terms.
 
 ---
 
